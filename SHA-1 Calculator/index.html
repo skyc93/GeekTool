@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHA-1 Hash — GeekTool</title>
+    <link rel="stylesheet" href="../shared/tool.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha1/0.6.0/sha1.min.js"></script>
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-link">← Back to GeekTool</a>
+
+        <header class="tool-header">
+            <div class="tool-header-row">
+                <div class="tool-header-text">
+                    <span class="tool-header-icon" aria-hidden="true">🔒</span>
+                    <div>
+                        <h1>SHA-1 Hash</h1>
+                        <p class="tool-header-desc">Generate SHA-1 hashes from any input.</p>
+                    </div>
+                </div>
+                <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="tool-panel">
+            <div class="tool-section">
+                <label class="tool-label" for="inputText">Enter text</label>
+                <textarea id="inputText" class="tool-textarea" placeholder="Type or paste your text here…"></textarea>
+            </div>
+
+            <div class="tool-actions">
+                <button type="button" id="calculateBtn" class="btn-primary">Calculate SHA-1</button>
+            </div>
+
+            <p id="errorMessage" class="error-message" hidden></p>
+
+            <div id="resultPanel" class="result-panel" hidden>
+                <div class="result-header">
+                    <p class="result-label">SHA-1 Hash</p>
+                    <button type="button" id="copyBtn" class="btn-copy">Copy</button>
+                </div>
+                <p id="result" class="result-value"></p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../shared/tool.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+:root {
+    --color-primary: #2563EB;
+    --color-primary-hover: #1D4ED8;
+    --color-bg: #F5F7FA;
+    --color-card: #FFFFFF;
+    --color-text: #111827;
+    --color-text-secondary: #6B7280;
+    --color-border: #E5E7EB;
+    --color-border-hover: #2563EB;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+    --radius-container: 24px;
+    --radius-card: 16px;
+    --transition: 0.25s ease;
+}
+
+[data-theme="dark"] {
+    --color-primary: #3B82F6;
+    --color-primary-hover: #60A5FA;
+    --color-bg: #0F1117;
+    --color-card: #1A1D27;
+    --color-text: #F3F4F6;
+    --color-text-secondary: #9CA3AF;
+    --color-border: #2D3140;
+    --color-border-hover: #3B82F6;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.5);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: 32px 24px;
+}
+
+.dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 40px 56px;
+    background: var(--color-card);
+    border-radius: var(--radius-container);
+    box-shadow: var(--shadow-md);
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header */
+
+.dashboard-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.dashboard-title {
+    margin: 0 0 8px;
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+.dashboard-subtitle {
+    margin: 0;
+    font-size: 18px;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--color-text-secondary);
+    pointer-events: none;
+}
+
+.search-input {
+    width: 240px;
+    padding: 10px 14px 10px 42px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--color-text);
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.search-input::placeholder {
+    color: var(--color-text-secondary);
+}
+
+.search-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    transition: border-color var(--transition), color var(--transition), background var(--transition);
+}
+
+.theme-toggle:hover {
+    border-color: var(--color-border-hover);
+    color: var(--color-text);
+}
+
+.icon-moon {
+    display: none;
+}
+
+[data-theme="dark"] .icon-sun {
+    display: none;
+}
+
+[data-theme="dark"] .icon-moon {
+    display: block;
+}
+
+/* Tool Grid */
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    justify-content: start;
+}
+
+/* Tool Cards */
+
+.tool-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 180px;
+    max-width: 320px;
+    width: 100%;
+    padding: 24px;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition);
+    animation: cardFadeIn 0.4s ease both;
+    cursor: pointer;
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tool-card:not(.tool-card--coming-soon):hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-hover);
+}
+
+.tool-card--coming-soon {
+    cursor: default;
+    opacity: 0.75;
+}
+
+.tool-icon {
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.tool-title {
+    margin: 0 0 6px;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.tool-description {
+    margin: 0 0 auto;
+    font-size: 15px;
+    color: var(--color-text-secondary);
+}
+
+.tool-button {
+    align-self: flex-start;
+    margin-top: 16px;
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: inherit;
+    color: #FFFFFF;
+    background: var(--color-primary);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.tool-card:hover .tool-button {
+    background: var(--color-primary-hover);
+}
+
+.tool-badge {
+    align-self: flex-start;
+    margin-top: 16px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    background: var(--color-bg);
+    border-radius: 8px;
+}
+
+.empty-state {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 15px;
+    color: var(--color-text-secondary);
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    body {
+        padding: 16px 12px;
+    }
+
+    .dashboard {
+        padding: 32px 24px 40px;
+        border-radius: 20px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        margin-bottom: 32px;
+    }
+
+    .header-actions {
+        width: 100%;
+    }
+
+    .search-wrapper {
+        flex: 1;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    .dashboard-title {
+        font-size: 32px;
+    }
+
+    .dashboard-subtitle {
+        font-size: 16px;
+    }
+
+    .tool-card {
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-title {
+        font-size: 28px;
+    }
+}

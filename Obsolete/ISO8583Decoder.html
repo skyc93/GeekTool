@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISO 8583 Formatter & TLV Parser</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        textarea, pre { width: 100%; height: 200px; font-family: monospace; }
+        button { margin-top: 10px; padding: 10px; cursor: pointer; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <h2>ISO 8583 Formatter & TLV Parser</h2>
+    <p>Enter your table below:</p>
+    <textarea id="inputTable" placeholder="Paste your table here..."></textarea>
+    <button onclick="formatISOMessage()">Format Message</button>
+
+    <h3>Formatted Output:</h3>
+    <pre id="output"></pre>
+
+    <script>
+        function formatISOMessage() {
+            let input = document.getElementById("inputTable").value;
+            let lines = input.split("\n");
+            let output = "SALE\n====\nRequest message:\n(Your input message goes here)\n\n";
+            let field55Value = "";
+
+            let fieldValues = {};
+
+            lines.forEach(line => {
+                let parts = line.split(/\s{2,}/); // Split by two or more spaces
+                if (parts.length >= 3) {
+                    let field = parts[0].trim();
+                    let value = parts[parts.length - 1].trim();
+                    fieldValues[field] = value;
+                }
+            });
+
+            output += "MTI: 0200\n\nField Value\n";
+            Object.keys(fieldValues).forEach(field => {
+                if (field === "55") {
+                    field55Value = fieldValues[field];
+                } else {
+                    output += `[${field}]     ${fieldValues[field]}\n`;
+                }
+            });
+
+            if (field55Value) {
+                output += `\n[55] ${field55Value}\n\n`;
+                output += parseTLV(field55Value);
+            }
+
+            document.getElementById("output").textContent = output;
+        }
+
+        function parseTLV(hexString) {
+            let output = "";
+            let index = 0;
+
+            while (index < hexString.length) {
+                let tag = hexString.substring(index, index + 2);
+                index += 2;
+                let length = parseInt(hexString.substring(index, index + 2), 16);
+                index += 2;
+                let value = hexString.substring(index, index + length * 2);
+                index += length * 2;
+
+                output += `Tag ${tag} : ${getTagDescription(tag)}\n${value}\n\n`;
+            }
+
+            return output;
+        }
+
+        function getTagDescription(tag) {
+            const tagDescriptions = {
+                "5F2A": "Currency Code",
+                "5F34": "Application PAN Sequence Number",
+                "82": "Application Interchange Profile",
+                "84": "Dedicated File (DF) Name",
+                "95": "Terminal Verification Results",
+                "9A": "Transaction Date",
+                "9C": "Transaction Type",
+                "9F02": "Transaction Amount",
+                "9F08": "Application Version Number",
+                "9F09": "Terminal Application Version Number",
+                "9F10": "Issuer Application Data",
+                "9F1A": "Terminal Country Code",
+                "9F1E": "Terminal Serial Number",
+                "9F26": "Application Cryptogram",
+                "9F27": "Cryptogram Information Data",
+                "9F33": "Terminal Capabilities",
+                "9F34": "Cardholder Verification Method (CVM) Results",
+                "9F35": "Terminal Type",
+                "9F36": "Application Transaction Counter (ATC)",
+                "9F37": "Unpredictable Number",
+                "9F41": "Transaction Sequence Counter",
+                "9F03": "Secondary Transaction Amount"
+            };
+
+            return tagDescriptions[tag] || "Unknown Tag";
+        }
+    </script>
+
+</body>
+</html>
