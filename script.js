@@ -1,5 +1,12 @@
 const TOOLS = [
     {
+        id: 'daily-password',
+        icon: '🗓️',
+        title: 'Daily Password',
+        description: 'Generate the six-digit password for any date.',
+        url: 'Daily Password/index.html',
+    },
+    {
         id: 'qr-generator',
         icon: '📱',
         title: 'QR Generator',
@@ -33,6 +40,13 @@ const TOOLS = [
         title: 'Character Counter',
         description: 'Count characters, words, and lines in text.',
         url: 'Character Counter/index.html',
+    },
+    {
+        id: 'hex-to-string',
+        icon: '🔡',
+        title: 'Hex to String',
+        description: 'Decode hexadecimal bytes as UTF-8 or Big5.',
+        url: 'Hex to String/index.html',
     },
     {
         id: 'future',

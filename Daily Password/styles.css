@@ -1,0 +1,13 @@
+.daily-password {
+    margin: 10px 0;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--color-primary);
+}
+
+.calculation-details {
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}

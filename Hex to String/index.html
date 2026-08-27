@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex to String — GeekTool</title>
+    <link rel="stylesheet" href="../shared/tool.css">
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-link">← Back to GeekTool</a>
+
+        <header class="tool-header">
+            <div class="tool-header-row">
+                <div class="tool-header-text">
+                    <span class="tool-header-icon" aria-hidden="true">🔡</span>
+                    <div>
+                        <h1>Hex to String</h1>
+                        <p class="tool-header-desc">Decode hexadecimal bytes as UTF-8 or Big5 text.</p>
+                    </div>
+                </div>
+                <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="tool-panel">
+            <div class="tool-section">
+                <label class="tool-label" for="hexInput">Hexadecimal bytes</label>
+                <textarea id="hexInput" class="tool-textarea" rows="7" spellcheck="false" placeholder="Example: A7 41 A6 6E A6 72 or 0xA7, 0x41, 0xA6, 0x6E"></textarea>
+            </div>
+
+            <div class="tool-section">
+                <label class="tool-label" for="encodingSelect">Text encoding</label>
+                <select id="encodingSelect" class="tool-input">
+                    <option value="utf-8">UTF-8</option>
+                    <option value="big5">Big5 (Traditional Chinese)</option>
+                </select>
+            </div>
+
+            <div class="tool-actions">
+                <button type="button" id="convertBtn" class="btn-primary">Convert to String</button>
+                <button type="button" id="clearBtn" class="btn-secondary">Clear</button>
+            </div>
+
+            <p id="errorMessage" class="error-message" hidden></p>
+
+            <div id="resultPanel" class="result-panel" hidden>
+                <div class="result-header">
+                    <p class="result-label">Decoded string</p>
+                    <button type="button" id="copyBtn" class="btn-copy">Copy</button>
+                </div>
+                <p id="result" class="result-value"></p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../shared/tool.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
