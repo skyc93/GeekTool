@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Detector — GeekTool</title>
+    <link rel="stylesheet" href="../shared/tool.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-link">← Back to GeekTool</a>
+
+        <header class="tool-header">
+            <div class="tool-header-row">
+                <div class="tool-header-text">
+                    <span class="tool-header-icon" aria-hidden="true">🌐</span>
+                    <div>
+                        <h1>IP Detector</h1>
+                        <p class="tool-header-desc">Detect your public IPv4 and IPv6 addresses.</p>
+                    </div>
+                </div>
+                <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="tool-panel">
+            <div class="ip-grid">
+                <section class="ip-card" aria-labelledby="ipv4Label">
+                    <div class="ip-card-header">
+                        <div>
+                            <p id="ipv4Label" class="result-label">Public IPv4</p>
+                            <span id="ipv4Status" class="ip-status">Detecting…</span>
+                        </div>
+                        <button type="button" id="copyIpv4Btn" class="btn-copy" disabled>Copy</button>
+                    </div>
+                    <p id="ipv4Value" class="ip-value" aria-live="polite">—</p>
+                </section>
+
+                <section class="ip-card" aria-labelledby="ipv6Label">
+                    <div class="ip-card-header">
+                        <div>
+                            <p id="ipv6Label" class="result-label">Public IPv6</p>
+                            <span id="ipv6Status" class="ip-status">Detecting…</span>
+                        </div>
+                        <button type="button" id="copyIpv6Btn" class="btn-copy" disabled>Copy</button>
+                    </div>
+                    <p id="ipv6Value" class="ip-value" aria-live="polite">—</p>
+                </section>
+            </div>
+
+            <div class="tool-actions ip-actions">
+                <button type="button" id="refreshBtn" class="btn-primary">Refresh Addresses</button>
+            </div>
+
+            <p class="privacy-note">
+                These are public internet addresses detected through ipify. IPv6 may be unavailable
+                if your device, router, VPN, or internet provider does not support it.
+            </p>
+        </main>
+    </div>
+
+    <script src="../shared/tool.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

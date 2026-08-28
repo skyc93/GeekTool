@@ -7,6 +7,13 @@ const TOOLS = [
         url: 'Daily Password/index.html',
     },
     {
+        id: 'ip-detector',
+        icon: '🌐',
+        title: 'IP Detector',
+        description: 'Detect your public IPv4 and IPv6 addresses.',
+        url: 'IP Detector/index.html',
+    },
+    {
         id: 'qr-generator',
         icon: '📱',
         title: 'QR Generator',
