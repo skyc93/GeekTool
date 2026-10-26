@@ -1,0 +1,20 @@
+.file-preview {
+    margin-top: 18px;
+}
+
+.image-preview {
+    display: block;
+    max-width: 100%;
+    max-height: 420px;
+    margin: 0 auto 18px;
+    object-fit: contain;
+    background: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+}
+
+.download-button {
+    display: inline-flex;
+    text-decoration: none;
+}

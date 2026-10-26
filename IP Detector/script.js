@@ -1,7 +1,13 @@
-const IP_ENDPOINTS = {
-    ipv4: 'https://api.ipify.org?format=json',
-    ipv6: 'https://api6.ipify.org?format=json',
-};
+const IPV4_SOURCES = [
+    'https://ipv4.icanhazip.com',
+    'https://api.ipify.org?format=json',
+];
+
+const IPV6_SOURCES = [
+    'https://ipv6.icanhazip.com',
+    'https://api.ip.sb/ip',
+    'https://api6.ipify.org?format=json',
+];
 
 function isValidIpv4(value) {
     const parts = value.split('.');
@@ -14,36 +20,93 @@ function isValidIpv6(value) {
     return value.includes(':') && /^[0-9a-f:.]+$/i.test(value);
 }
 
-async function fetchPublicIp(endpoint, version, timeoutMs = 8000) {
+function extractIp(payload, version) {
+    const text = typeof payload === 'string'
+        ? payload.trim()
+        : String(payload?.ip || payload?.query || '').trim();
+
+    if (version === 4) {
+        const match = text.match(/\b(?:\d{1,3}\.){3}\d{1,3}\b/);
+        return match && isValidIpv4(match[0]) ? match[0] : '';
+    }
+
+    const match = text.match(/[0-9a-f:]{2,}:[0-9a-f:.]{2,}/i);
+    return match && isValidIpv6(match[0]) ? match[0] : '';
+}
+
+function parseWhatIsMyIpAddressHtml(html) {
+    const ipv4Match = html.match(/id=["']ipv4["'][^>]*>[\s\S]*?([0-9]{1,3}(?:\.[0-9]{1,3}){3})/i);
+    const ipv6Match = html.match(/id=["']ipv6["'][^>]*>[\s\S]*?([0-9a-f:]{2,}:[0-9a-f:.]{2,})/i);
+
+    return {
+        ipv4: ipv4Match && isValidIpv4(ipv4Match[1]) ? ipv4Match[1] : '',
+        ipv6: ipv6Match && isValidIpv6(ipv6Match[1]) ? ipv6Match[1] : '',
+        source: 'whatismyipaddress.com',
+    };
+}
+
+async function fetchText(url, timeoutMs = 8000) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
     try {
-        const response = await fetch(endpoint, {
+        const response = await fetch(url, {
             cache: 'no-store',
             signal: controller.signal,
+            headers: { Accept: 'application/json, text/plain, text/html;q=0.8' },
         });
 
         if (!response.ok) {
             throw new Error(`Request failed with status ${response.status}.`);
         }
 
-        const data = await response.json();
-        const value = String(data.ip || '').trim();
-        const isValid = version === 4 ? isValidIpv4(value) : isValidIpv6(value);
-
-        if (!isValid) {
-            throw new Error(`The service returned an invalid IPv${version} address.`);
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+            return await response.json();
         }
-
-        return value;
+        return (await response.text()).trim();
     } finally {
         clearTimeout(timeout);
     }
 }
 
+async function fetchPublicIp(sources, version) {
+    let lastError = new Error(`Unable to detect IPv${version}.`);
+
+    for (const url of sources) {
+        try {
+            const payload = await fetchText(url);
+            const value = extractIp(payload, version);
+            if (value) return value;
+            lastError = new Error(`The service returned an invalid IPv${version} address.`);
+        } catch (error) {
+            lastError = error;
+        }
+    }
+
+    throw lastError;
+}
+
+async function fetchFromWhatIsMyIpAddress() {
+    if (window.location.protocol === 'file:') {
+        throw new Error('Local server is required to read whatismyipaddress.com.');
+    }
+
+    const payload = await fetchText('/api/ip', 12000);
+    if (!payload || typeof payload !== 'object') {
+        throw new Error('whatismyipaddress.com did not return IP data.');
+    }
+
+    return {
+        ipv4: isValidIpv4(payload.ipv4 || '') ? payload.ipv4 : '',
+        ipv6: isValidIpv6(payload.ipv6 || '') ? payload.ipv6 : '',
+        source: payload.source || 'whatismyipaddress.com',
+    };
+}
+
 if (typeof document !== 'undefined') {
     const refreshBtn = document.getElementById('refreshBtn');
+    const sourceNote = document.getElementById('sourceNote');
 
     const views = {
         ipv4: {
@@ -85,30 +148,55 @@ if (typeof document !== 'undefined') {
         view.copy.disabled = true;
     }
 
+    function setSourceNote(source) {
+        if (!sourceNote) return;
+        sourceNote.textContent = source === 'whatismyipaddress.com'
+            ? 'Addresses were read from whatismyipaddress.com.'
+            : 'whatismyipaddress.com was unavailable, so a public IP lookup fallback was used.';
+    }
+
     async function detectAddresses() {
         setLoading(views.ipv4);
         setLoading(views.ipv6);
         refreshBtn.disabled = true;
         refreshBtn.textContent = 'Detecting…';
 
-        const requests = [
-            fetchPublicIp(IP_ENDPOINTS.ipv4, 4),
-            fetchPublicIp(IP_ENDPOINTS.ipv6, 6),
-        ];
-        const [ipv4Result, ipv6Result] = await Promise.allSettled(requests);
+        let ipv4 = '';
+        let ipv6 = '';
+        let source = '';
 
-        if (ipv4Result.status === 'fulfilled') {
-            setSuccess(views.ipv4, ipv4Result.value);
-        } else {
-            setFailure(views.ipv4, 4, ipv4Result.reason);
+        try {
+            const pageResult = await fetchFromWhatIsMyIpAddress();
+            ipv4 = pageResult.ipv4;
+            ipv6 = pageResult.ipv6;
+            if (ipv4 || ipv6) source = 'whatismyipaddress.com';
+        } catch {
+            source = '';
         }
 
-        if (ipv6Result.status === 'fulfilled') {
-            setSuccess(views.ipv6, ipv6Result.value);
-        } else {
-            setFailure(views.ipv6, 6, ipv6Result.reason);
+        const lookups = [];
+        if (!ipv4) lookups.push(fetchPublicIp(IPV4_SOURCES, 4).then((value) => { ipv4 = value; }));
+        if (!ipv6) lookups.push(fetchPublicIp(IPV6_SOURCES, 6).then((value) => { ipv6 = value; }));
+
+        const settled = await Promise.allSettled(lookups);
+        if (!source && settled.some((result) => result.status === 'fulfilled')) {
+            source = 'fallback';
         }
 
+        if (ipv4) {
+            setSuccess(views.ipv4, ipv4);
+        } else {
+            const ipv4Error = settled.find((result) => result.status === 'rejected');
+            setFailure(views.ipv4, 4, ipv4Error ? ipv4Error.reason : new Error('Unable to detect'));
+        }
+
+        if (ipv6) {
+            setSuccess(views.ipv6, ipv6);
+        } else {
+            setFailure(views.ipv6, 6, new Error('No IPv6 connection detected'));
+        }
+
+        setSourceNote(source);
         refreshBtn.disabled = false;
         refreshBtn.textContent = 'Refresh Addresses';
     }
@@ -125,5 +213,13 @@ if (typeof document !== 'undefined') {
 }
 
 if (typeof module !== 'undefined') {
-    module.exports = { IP_ENDPOINTS, isValidIpv4, isValidIpv6, fetchPublicIp };
+    module.exports = {
+        IPV4_SOURCES,
+        IPV6_SOURCES,
+        isValidIpv4,
+        isValidIpv6,
+        extractIp,
+        parseWhatIsMyIpAddressHtml,
+        fetchPublicIp,
+    };
 }

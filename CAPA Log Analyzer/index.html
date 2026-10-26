@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPA Log Analyzer — GeekTool</title>
+    <link rel="stylesheet" href="../shared/tool.css">
+    <link rel="stylesheet" href="styles.css?v=summary-jump">
+</head>
+<body>
+    <div class="tool-page tool-page--wide">
+        <a href="../index.html" class="back-link">← Back to GeekTool</a>
+
+        <header class="tool-header">
+            <div class="tool-header-row">
+                <div class="tool-header-text">
+                    <span class="tool-header-icon" aria-hidden="true">📋</span>
+                    <div>
+                        <h1>CAPA Log Analyzer</h1>
+                        <p class="tool-header-desc">Group CAPA events into transactions and inspect each scenario.</p>
+                    </div>
+                </div>
+                <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="tool-panel">
+            <div class="tool-section">
+                <p class="tool-label">Detection criteria</p>
+                <ul class="criteria-list">
+                    <li>PaymentApplication onCreate</li>
+                    <li>BootUp action received</li>
+                    <li>TriggerDispatcherReceiver onReceive</li>
+                    <li>ECR Request Ecr Mode</li>
+                    <li>ECR Request =&gt;</li>
+                    <li>Transaction request to host</li>
+                    <li>Transaction response from host</li>
+                    <li>ECR Response =&gt;</li>
+                </ul>
+            </div>
+
+            <div class="tool-section">
+                <label class="tool-label" for="logFile">Upload CAPA log</label>
+                <input type="file" id="logFile" class="tool-input" accept=".log,.txt,.text,text/plain">
+            </div>
+
+            <div class="tool-section">
+                <label class="tool-label" for="logInput">Or paste log text</label>
+                <textarea id="logInput" class="tool-textarea log-input" rows="12" spellcheck="false" placeholder="Paste CAPA log lines here…"></textarea>
+            </div>
+
+            <div class="tool-actions">
+                <button type="button" id="analyzeBtn" class="btn-primary">Analyze Log</button>
+                <button type="button" id="clearBtn" class="btn-secondary">Clear</button>
+            </div>
+
+            <p id="errorMessage" class="error-message" hidden></p>
+
+            <div id="resultPanel" hidden>
+                <div id="summary" class="capa-summary"></div>
+                <section id="txnTypeSummary" class="txn-type-summary" hidden></section>
+                <nav id="abnormalJumps" class="abnormal-jumps" hidden></nav>
+                <div id="criteriaFilters" class="criteria-filters"></div>
+                <p class="timeline-hint">Each ECR cycle shows its response code. Jump shortcuts only appear for abnormal interruptions, such as onCreate mid-cycle.</p>
+                <div id="timeline" class="capa-timeline" aria-live="polite"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../shared/tool.js"></script>
+    <script src="script.js?v=summary-jump"></script>
+</body>
+</html>

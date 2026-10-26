@@ -1,0 +1,170 @@
+.tool-page--wide {
+    max-width: min(960px, 100%);
+}
+
+.log-input {
+    min-height: 160px;
+    font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+    font-size: 13px;
+}
+
+.tool-header-desc code {
+    font-size: 0.92em;
+}
+
+.verdict {
+    margin: 0 0 12px;
+    padding: 12px 14px;
+    font-size: 16px;
+    font-weight: 800;
+    border: 2px solid var(--color-border);
+    border-radius: 16px;
+}
+
+.verdict--found {
+    color: #0F6B45;
+    background: #D8F8E8;
+    border-color: #3DBE8A;
+}
+
+.verdict--missing {
+    color: #8A4B00;
+    background: #FFE7C2;
+    border-color: #F0A14A;
+}
+
+.capa-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.stat-chip {
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    background: #FFF7D6;
+    border: 1px solid #F5C84C;
+    border-radius: 999px;
+}
+
+.stat-chip strong {
+    color: var(--color-text);
+}
+
+.stat-chip--ok {
+    color: #0F6B45;
+    background: #D8F8E8;
+    border-color: #3DBE8A;
+}
+
+.stat-chip--alert {
+    color: #8A4B00;
+    background: #FFE7C2;
+    border-color: #F0A14A;
+}
+
+.match-list {
+    display: grid;
+    gap: 8px;
+}
+
+.match-card {
+    overflow: hidden;
+    background: #fff;
+    border: 2px solid var(--color-border);
+    border-radius: 16px;
+}
+
+.match-toggle {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+    padding: 8px 10px;
+    font-family: inherit;
+    text-align: left;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.match-title {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.match-meta {
+    display: block;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: 600;
+    color: #5B6475;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.match-badge {
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #C2410C;
+    background: #FFF7ED;
+    border: 1px solid #FDBA74;
+    border-radius: 999px;
+}
+
+.match-log {
+    margin: 0;
+    padding: 0 10px 10px;
+}
+
+.match-log[hidden] {
+    display: none;
+}
+
+.match-log pre {
+    margin: 0;
+    padding: 8px;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+    font-size: 12px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: #F8FAFC;
+    border-radius: 10px;
+}
+
+.empty-matches {
+    margin: 0;
+    color: var(--color-text-secondary);
+}
+
+[data-theme="dark"] .verdict--found {
+    color: #6EE7B7;
+    background: #163028;
+    border-color: #3DBE8A;
+}
+
+[data-theme="dark"] .verdict--missing {
+    color: #FDBA74;
+    background: #3D2A16;
+    border-color: #F59E0B;
+}
+
+[data-theme="dark"] .match-card {
+    background: #111318;
+}
+
+[data-theme="dark"] .match-meta {
+    color: #B8C0D0;
+}
+
+[data-theme="dark"] .match-log pre {
+    background: #1A1D27;
+}

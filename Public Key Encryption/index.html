@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Key Encryption — GeekTool</title>
+    <link rel="stylesheet" href="../shared/tool.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-link">← Back to GeekTool</a>
+
+        <header class="tool-header">
+            <div class="tool-header-row">
+                <div class="tool-header-text">
+                    <span class="tool-header-icon" aria-hidden="true">🗝️</span>
+                    <div>
+                        <h1>Public Key Encryption</h1>
+                        <p class="tool-header-desc">Generate an RSA-OAEP key pair, then encrypt or decrypt text in the browser.</p>
+                    </div>
+                </div>
+                <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="tool-panel">
+            <div class="tool-actions">
+                <button type="button" id="generateBtn" class="btn-primary">Generate key pair</button>
+            </div>
+
+            <div class="tool-section">
+                <label class="tool-label" for="publicKey">Public key (PEM)</label>
+                <textarea id="publicKey" class="tool-textarea key-input" rows="6" spellcheck="false" placeholder="-----BEGIN PUBLIC KEY-----"></textarea>
+            </div>
+
+            <div class="tool-section">
+                <label class="tool-label" for="privateKey">Private key (PEM)</label>
+                <textarea id="privateKey" class="tool-textarea key-input" rows="8" spellcheck="false" placeholder="-----BEGIN PRIVATE KEY-----"></textarea>
+            </div>
+
+            <div class="tool-section">
+                <label class="tool-label" for="plainText">Plain text</label>
+                <textarea id="plainText" class="tool-textarea" rows="4" spellcheck="false" placeholder="Text to encrypt…"></textarea>
+            </div>
+
+            <div class="tool-section">
+                <label class="tool-label" for="cipherText">Cipher text (Base64)</label>
+                <textarea id="cipherText" class="tool-textarea" rows="4" spellcheck="false" placeholder="Encrypted output or paste Base64 to decrypt…"></textarea>
+            </div>
+
+            <div class="tool-actions">
+                <button type="button" id="encryptBtn" class="btn-primary">Encrypt</button>
+                <button type="button" id="decryptBtn" class="btn-secondary">Decrypt</button>
+                <button type="button" id="copyCipherBtn" class="btn-copy">Copy cipher</button>
+                <button type="button" id="clearBtn" class="btn-secondary">Clear</button>
+            </div>
+
+            <p id="errorMessage" class="error-message" hidden></p>
+            <p id="statusMessage" class="status-message" hidden></p>
+        </main>
+    </div>
+
+    <script src="../shared/tool.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

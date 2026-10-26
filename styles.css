@@ -47,7 +47,7 @@ body {
 }
 
 .dashboard {
-    max-width: 1200px;
+    max-width: 1360px;
     margin: 0 auto;
     padding: 48px 40px 56px;
     background: var(--color-card);
@@ -169,11 +169,29 @@ body {
 
 /* Tool Grid */
 
-.tool-grid {
+.category-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    justify-content: start;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    align-items: start;
+}
+
+.tool-column {
+    min-width: 0;
+}
+
+.tool-column-title {
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+}
+
+.tool-column-list {
+    display: grid;
+    gap: 16px;
 }
 
 /* Tool Cards */
@@ -182,7 +200,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 180px;
-    max-width: 320px;
+    max-width: none;
     width: 100%;
     padding: 24px;
     background: var(--color-card);
@@ -277,6 +295,12 @@ body {
 
 /* Responsive */
 
+@media (max-width: 1100px) {
+    .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 @media (max-width: 768px) {
     body {
         padding: 16px 12px;
@@ -310,6 +334,10 @@ body {
 
     .dashboard-subtitle {
         font-size: 16px;
+    }
+
+    .category-grid {
+        grid-template-columns: 1fr;
     }
 
     .tool-card {

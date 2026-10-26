@@ -16,7 +16,7 @@
                     <span class="tool-header-icon" aria-hidden="true">🔡</span>
                     <div>
                         <h1>Hex to String</h1>
-                        <p class="tool-header-desc">Decode hexadecimal bytes as UTF-8 or Big5 text.</p>
+                        <p class="tool-header-desc">Convert hexadecimal bytes to text, or text to hexadecimal bytes, as UTF-8 or Big5.</p>
                     </div>
                 </div>
                 <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
@@ -28,8 +28,8 @@
 
         <main class="tool-panel">
             <div class="tool-section">
-                <label class="tool-label" for="hexInput">Hexadecimal bytes</label>
-                <textarea id="hexInput" class="tool-textarea" rows="7" spellcheck="false" placeholder="Example: A7 41 A6 6E A6 72 or 0xA7, 0x41, 0xA6, 0x6E"></textarea>
+                <label class="tool-label" for="hexInput">Input</label>
+                <textarea id="hexInput" class="tool-textarea" rows="7" spellcheck="false" placeholder="Hex: A7 41 A6 6E or text: Hello"></textarea>
             </div>
 
             <div class="tool-section">
@@ -42,6 +42,7 @@
 
             <div class="tool-actions">
                 <button type="button" id="convertBtn" class="btn-primary">Convert to String</button>
+                <button type="button" id="toHexBtn" class="btn-secondary">Convert to Hex</button>
                 <button type="button" id="clearBtn" class="btn-secondary">Clear</button>
             </div>
 
@@ -49,7 +50,7 @@
 
             <div id="resultPanel" class="result-panel" hidden>
                 <div class="result-header">
-                    <p class="result-label">Decoded string</p>
+                    <p class="result-label" id="resultLabel">Decoded string</p>
                     <button type="button" id="copyBtn" class="btn-copy">Copy</button>
                 </div>
                 <p id="result" class="result-value"></p>
